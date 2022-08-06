@@ -162,7 +162,7 @@ def get_element1(element1):
 
 # @app.route("/Element/<Main>/<secondary>")
 # def Element(combined_element):
-#     combined_element = request.args.get('http://127.0.0.1:5000/Element/{get_element1}/${get_element2}') 
+#     combined_element = request.args.get('https://caw-capstone.herokuapp.com/Element/{get_element1}/${get_element2}') 
 #     return jsonify(element_schema(combined_element))
 
 
