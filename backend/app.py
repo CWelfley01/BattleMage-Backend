@@ -15,6 +15,8 @@ ma = Marshmallow(app)
 
 CORS(app)
 
+
+
 # SPELL TABLE
 class Spells(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -142,16 +144,28 @@ def add_FormElement():
 
     return jsonify(FormElement_schema.dump(record))
 
-# @app.route("/Element/<row>/<column>", methods=["GET"])
-# def get_an_element(row, column):
-#     second_element = Element.query.get(row)
-#     combined_element = row.query.get(column) 
+
+@app.route("/Element")
+def get_all_elements():
+    all_elements = Element.query.order_by(Element).all()
+    return jsonify(elements_schema.dump(all_elements))
+
+@app.route("/Element/")
+def get_element1(element1):
+    element1 = request.args.get('http://127.0.0.1:3000/hud.js/{this.state.element1}')
+    return jsonify(elements_schema.dump(element1))
+
+# @app.route("/Element/{get_element1}/<element2>")
+# def get_element2(element2):
+#     element2 = request.args.get('http://127.0.0.1:3000/hud.js/{this.state.element2}')
+#     return jsonify(element_schema.dump(element2))
+
+# @app.route("/Element/<Main>/<secondary>")
+# def Element(combined_element):
+#     combined_element = request.args.get('http://127.0.0.1:5000/Element/{get_element1}/${get_element2}') 
 #     return jsonify(element_schema(combined_element))
 
-@app.route("/Element", methods=["GET"])
-def get_all_elements():
-    all_elements = Element.query.all()
-    return jsonify(elements_schema.dump(all_elements))
+
     
     
 @app.route("/spells", methods=["GET"])
@@ -195,7 +209,7 @@ def spell_id(id):
     elif request.method == "GET":
         return spell_schema.jsonify(spell)
     
-@app.route("/element/<id>", methods=["DELETE","GET","PUT"])
+@app.route("/Element/<id>", methods=["DELETE","GET","PUT"])
 def element_id(id):
     element = Element.query.get(id)
     if request.method == "DELETE":
