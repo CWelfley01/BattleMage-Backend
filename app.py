@@ -152,12 +152,12 @@ def get_all_elements():
 
 @app.route("/Element/")
 def get_element1(element1):
-    element1 = request.args.get('http://127.0.0.1:3000/hud.js/{this.state.element1}')
+    element1 = request.args.get('https://caw-capstone-frontend.herokuapp.com/hud.js/{this.state.element1}')
     return jsonify(elements_schema.dump(element1))
 
 # @app.route("/Element/<element1>/<element2>")
 # def get_element2(element2):
-#     element2 = request.args.get('http://127.0.0.1:3000/hud.js/{this.state.element2}')
+#     element2 = request.args.get('https://caw-capstone-frontend.herokuapp.com//hud.js/{this.state.element2}')
 #     return jsonify(element_schema.dump(element2))
 
 # @app.route("/Element/<Main>/<secondary>")
