@@ -147,7 +147,7 @@ def add_FormElement():
 
 @app.route("/Element")
 def get_all_elements():
-    all_elements = Element.query.order_by(Element).all()
+    all_elements = Element.query.all()
     return jsonify(elements_schema.dump(all_elements))
 
 @app.route("/Element/")
