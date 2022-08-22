@@ -45,7 +45,7 @@ spells_schema = SpellSchema(many=True)
 # Element Table
 class Element(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    Main = db.Column(db.String, nullable=False)
+    Main = db.Column(db.String, primary_key=True nullable=False)
     Fire = db.Column(db.String, nullable=False)
     Water = db.Column(db.String, nullable=False)
     Air = db.Column(db.String, nullable=False)
