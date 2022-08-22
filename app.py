@@ -158,7 +158,7 @@ def get_element2(element2):
     element2 = request.args.get('https://caw-capstone-frontend.herokuapp.com/hud.js/{this.state.element2}')
     return jsonify(element_schema.dump(element2))
 def get_combined_element(element):
-    combined_element = Element.query.get('https://caw-capstone.herokuapp.com/Element/Main:element1, element2)
+    combined_element = Element.query.get('https://caw-capstone.herokuapp.com/Element/Main:element1, element2')
     return jsonify(elements_schema.dump(combined_element))
 
 # @app.route("/Element/<Main>/<secondary>")
