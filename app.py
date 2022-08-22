@@ -150,7 +150,7 @@ def get_all_elements():
     all_elements = Element.query.all()
     return jsonify(elements_schema.dump(all_elements))
 
-@app.route("/Element/<element1>/<element2>")
+@app.route("/Element/<element1>/<element2>", methods=["GET"])
 def get_element1(element1):
     element1 = request.args.get('https://caw-capstone-frontend.herokuapp.com/hud.js/{this.state.element1}')
     return jsonify(elements_schema.dump(element1))
