@@ -150,16 +150,23 @@ def get_all_elements():
     all_elements = Element.query.all()
     return jsonify(elements_schema.dump(all_elements))
 
-@app.route("/Element/<element1>/<element2>", methods=["GET"])
+@app.route("/Element/<element1>", methods=["GET"])
 def get_element1(element1):
     element1 = request.args.get('https://caw-capstone-frontend.herokuapp.com/hud.js/{this.state.element1}')
-    return jsonify(elements_schema.dump(element1))
+    return jsonify(element_schema(element1))
+
+@app.route("/Element/<element1>/<element2>", methods=["GET"])
 def get_element2(element2):
     element2 = request.args.get('https://caw-capstone-frontend.herokuapp.com/hud.js/{this.state.element2}')
-    return jsonify(element_schema.dump(element2))
+    return jsonify(element_schema(element2))
+
+@app.route("/Element/<combined_element>", methods=["GET"])
 def get_combined_element(element):
-    combined_element = Element.query.get('https://caw-capstone.herokuapp.com/Element/Main:element1, element2')
-    return jsonify(elements_schema.dump(combined_element))
+    row = request.args.get("row", element1)
+    column = request.args.get("column", element2)
+    first_element = request.args.get(row)
+    combined_element = Element.query.get(column)
+    return jsonify(element_schema(combined_element))
 
 # @app.route("/Element/<Main>/<secondary>")
 # def Element(combined_element):
