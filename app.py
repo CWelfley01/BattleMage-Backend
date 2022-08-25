@@ -45,22 +45,18 @@ spells_schema = SpellSchema(many=True)
 # Element Table
 class Element(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    Main = db.Column(db.String, nullable=False)
-    Fire = db.Column(db.String, nullable=False)
-    Water = db.Column(db.String, nullable=False)
-    Air = db.Column(db.String, nullable=False)
-    Earth = db.Column(db.String, nullable=False)
+    Combo = db.Column(db.String, nullable=False)
+    Result = db.Column(db.String, nullable=False)
     
-    def __init__(self, Main, Fire, Water, Air, Earth):
-        self.Main = Main
-        self.Fire = Fire
-        self.Water = Water
-        self.Air = Air
-        self.Earth = Earth
+    
+    def __init__(self, Combo, Result, Water, Air, Earth):
+        self.Combo = Combo
+        self.Result = Result
+        
         
 class ElementSchema(ma.Schema):
     class Meta:
-        fields = ("id", "Main","Fire", "Water", "Air", "Earth")
+        fields = ("id", "Combo","Result")
 
 element_schema = ElementSchema()
 elements_schema = ElementSchema(many=True)
@@ -110,15 +106,13 @@ def add_spell():
 
 @app.route("/add-element", methods=["POST"])
 def add_element():
-    Main = request.json.get("Main")
-    Fire = request.json.get("Fire")
-    Water = request.json.get("Water")
-    Air = request.json.get("Air")
-    Earth = request.json.get("Earth")
+    Combo = request.json.get("Combo")
+    Result = request.json.get("Result")
+    
     
     
 
-    record = Element(Main, Fire, Water, Air, Earth)
+    record = Element(Combo, Result)
     
     db.session.add(record)
     db.session.commit()
@@ -153,20 +147,21 @@ def get_all_elements():
 @app.route("/Element/<element1>", methods=["GET"])
 def get_element1(element1):
     element1 = request.args.get('https://caw-capstone-frontend.herokuapp.com/hud.js/{this.state.element1}')
-    return jsonify(element_schema(element1))
+    return (element1)
 
-@app.route("/Element/<element1>/<element2>", methods=["GET"])
+@app.route("/Element/'element1'/<element2>", methods=["GET"])
 def get_element2(element2):
+    element1 = get_element1()
     element2 = request.args.get('https://caw-capstone-frontend.herokuapp.com/hud.js/{this.state.element2}')
-    return jsonify(element_schema(element2))
+    return (element2)
 
-@app.route("/Element/<combined_element>", methods=["GET"])
-def get_combined_element(element):
-    row = request.args.get("row", element1)
-    column = request.args.get("column", element2)
-    first_element = request.args.get(row)
-    combined_element = Element.query.get(column)
-    return jsonify(element_schema(combined_element))
+# @app.route("/Element/<combined_element>", methods=["GET"])
+# def get_combined_element(element):
+#     element1 = get_element1()
+#     element2 = get_element2()
+#     combine_elements = Element.query.match(Combo.'<element1>'+"/"+'<element2>')
+#     combined_element = combine_elements.filter('<element2>')
+#     return jsonify(element_schema(combined_element))
 
 # @app.route("/Element/<Main>/<secondary>")
 # def Element(combined_element):
@@ -226,18 +221,14 @@ def element_id(id):
     
         return element_schema.jsonify(element)
     elif request.method == "PUT":
-        Main = request.json['Main']
-        Fire = request.json['Fire']
-        Water = request.json['Water']
-        Air = request.json['Air']
-        Earth = request.json['Earth']
+        Combo = request.json['Combo']
+        Result = request.json['Result']
+        
        
 
-        element.Main = Main
-        element.Fire = Fire
-        element.Water = Water
-        element.Air = Air
-        element.Earth = Earth
+        element.Combo = Combo
+        element.Result = Result
+        
 
         db.session.commit()
         return element_schema.jsonify(element)
