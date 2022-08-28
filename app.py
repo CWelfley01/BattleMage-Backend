@@ -49,7 +49,7 @@ class Element(db.Model):
     Result = db.Column(db.String, nullable=False)
     
     
-    def __init__(self, Combo, Result, Water, Air, Earth):
+    def __init__(self, Combo, Result):
         self.Combo = Combo
         self.Result = Result
         
@@ -144,29 +144,9 @@ def get_all_elements():
     all_elements = Element.query.all()
     return jsonify(elements_schema.dump(all_elements))
 
-@app.route("/Element/<element1>", methods=["GET"])
-def get_element1(element1):
-    element1 = request.args.get('https://caw-capstone-frontend.herokuapp.com/hud.js/{this.state.element1}')
-    return (element1)
 
-@app.route("/Element/'element1'/<element2>", methods=["GET"])
-def get_element2(element2):
-    element1 = get_element1()
-    element2 = request.args.get('https://caw-capstone-frontend.herokuapp.com/hud.js/{this.state.element2}')
-    return (element2)
 
-# @app.route("/Element/<combined_element>", methods=["GET"])
-# def get_combined_element(element):
-#     element1 = get_element1()
-#     element2 = get_element2()
-#     combine_elements = Element.query.match(Combo.'<element1>'+"/"+'<element2>')
-#     combined_element = combine_elements.filter('<element2>')
-#     return jsonify(element_schema(combined_element))
 
-# @app.route("/Element/<Main>/<secondary>")
-# def Element(combined_element):
-#     combined_element = request.args.get('https://caw-capstone.herokuapp.com/Element/{get_element1}/${get_element2}') 
-#     return jsonify(element_schema(combined_element))
 
 
     
