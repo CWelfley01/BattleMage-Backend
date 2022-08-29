@@ -65,7 +65,7 @@ elements_schema = ElementSchema(many=True)
 
 
 # Form table
-class FormElement(db.Model):
+class Form(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     element = db.Column(db.String, nullable=False)
     shot = db.Column(db.String, nullable=False)
@@ -79,12 +79,12 @@ class FormElement(db.Model):
         self.wall = wall
         
 
-class FormElementSchema(ma.Schema):
+class FormSchema(ma.Schema):
     class Meta:
         fields = ("id", "element", "shot", "beam", "wall")
 
-formElement_schema = FormElementSchema()
-formElements_schema = FormElementSchema(many=True)
+form_schema = FormSchema()
+forms_schema = FormSchema(many=True)
 
 
 # ROUTES
@@ -122,7 +122,7 @@ def add_element():
 
 
 
-@app.route("/add-FormElement", methods=["POST"])
+@app.route("/add-Form", methods=["POST"])
 def add_FormElement():
     element = request.json.get("element")
     shot = request.json.get("shot")
@@ -131,12 +131,12 @@ def add_FormElement():
     
     
 
-    record = FormElement(element, shot, beam, wall)
+    record = Form(element, shot, beam, wall)
     
     db.session.add(record)
     db.session.commit()
 
-    return jsonify(FormElement_schema.dump(record))
+    return jsonify(Form_schema.dump(record))
 
 
 @app.route("/Element")
@@ -144,13 +144,6 @@ def get_all_elements():
     all_elements = Element.query.all()
     return jsonify(elements_schema.dump(all_elements))
 
-
-
-
-
-
-    
-    
 @app.route("/spells", methods=["GET"])
 def get_all_spells():
     all_spells = Spells.query.all()
@@ -158,10 +151,10 @@ def get_all_spells():
 
 
 
-@app.route("/FormElement", methods=["GET"])
-def get_all_FormElement():
-    all_FormElement = FormElement.query.all()
-    return jsonify(formelement_schema.dump(all_FormElement))
+@app.route("/Form", methods=["GET"])
+def get_all_form():
+    all_form = Form.query.all()
+    return jsonify(forms_schema.dump(all_form))
 
 
 
@@ -215,6 +208,33 @@ def element_id(id):
     elif request.method == "GET":
         return element_schema.jsonify(element)
     
+    
+@app.route("/Form/<id>", methods=["DELETE","GET","PUT"])
+def form_id(id):
+    form = Form.query.get(id)
+    if request.method == "DELETE":
+        db.session.delete(form)
+        db.session.commit()
+    
+        return form_schema.jsonify(form)
+    elif request.method == "PUT":
+        element = request.json.get("element")
+        shot = request.json.get("shot")
+        beam = request.json.get("beam")
+        wall = request.json.get("wall")
+        
+       
+
+        form.element = element
+        form.shot = shot
+        form.beam = beam
+        form.wall = wall
+        
+
+        db.session.commit()
+        return form_schema.jsonify(form)
+    elif request.method == "GET":
+        return form_schema.jsonify(form)
     
 
     
