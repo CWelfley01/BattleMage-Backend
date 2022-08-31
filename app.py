@@ -67,21 +67,19 @@ elements_schema = ElementSchema(many=True)
 # Form table
 class Form(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    element = db.Column(db.String, nullable=False)
-    shot = db.Column(db.String, nullable=False)
-    beam = db.Column(db.String, nullable=False)
-    wall = db.Column(db.String, nullable=False)
+    Combine = db.Column(db.String, nullable=False)
+    End = db.Column(db.String, nullable=False)
+    
 
-    def __init__(self, element, shot, beam, wall):
-        self.element = element
-        self.shot = shot
-        self.beam = beam
-        self.wall = wall
+    def __init__(self, Combine, End):
+        self.Combine = Combine
+        self.End = End
+        
         
 
 class FormSchema(ma.Schema):
     class Meta:
-        fields = ("id", "element", "shot", "beam", "wall")
+        fields = ("id", "Combine", "End")
 
 form_schema = FormSchema()
 forms_schema = FormSchema(many=True)
@@ -124,14 +122,13 @@ def add_element():
 
 @app.route("/add-Form", methods=["POST"])
 def add_FormElement():
-    element = request.json.get("element")
-    shot = request.json.get("shot")
-    beam = request.json.get("beam")
-    wall = request.json.get("wall")
+    Combine = request.json.get("Combine")
+    End = request.json.get("End")
+    
     
     
 
-    record = Form(element, shot, beam, wall)
+    record = Form(Combine, End)
     
     db.session.add(record)
     db.session.commit()
@@ -218,17 +215,15 @@ def form_id(id):
     
         return form_schema.jsonify(form)
     elif request.method == "PUT":
-        element = request.json.get("element")
-        shot = request.json.get("shot")
-        beam = request.json.get("beam")
-        wall = request.json.get("wall")
+        Combine = request.json.get("Combine")
+        End = request.json.get("End")
+        
         
        
 
-        form.element = element
-        form.shot = shot
-        form.beam = beam
-        form.wall = wall
+        form.Combine = Combine
+        form.End = End
+        
         
 
         db.session.commit()
