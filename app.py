@@ -133,7 +133,7 @@ def add_FormElement():
     db.session.add(record)
     db.session.commit()
 
-    return jsonify(Form_schema.dump(record))
+    return jsonify(form_schema.dump(record))
 
 
 @app.route("/Element")
